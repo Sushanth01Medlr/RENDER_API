@@ -41,6 +41,12 @@ class PriceResponse(BaseModel):
     errors: List[str] = Field(default_factory=list)
 
 
+from litestar import get, Litestar
+
+@get("/")  # Handles GET (and HEAD by virtue of GET)
+def health_check() -> dict[str, str]:
+    return {"status": "alive"}
+
 async def fetch_apollo_price(url: str) -> Dict[str, Any]:
     """Fetch the retail price from Apollo Pharmacy."""
     headers = {
@@ -846,6 +852,6 @@ async def get_retail_prices(data: PriceRequest) -> Response:
 
 
 app = Litestar(
-    route_handlers=[get_retail_prices],
+    route_handlers=[get_retail_prices,health_check],
     debug=True
 )
