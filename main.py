@@ -44,7 +44,7 @@ class PriceResponse(BaseModel):
 from litestar import get, Litestar
 
 @get("/")  # Handles GET (and HEAD by virtue of GET)
-def health_check() -> dict[str, str]:
+async def health_check() -> dict[str, str]:
     return {"status": "alive"}
 
 async def fetch_apollo_price(url: str) -> Dict[str, Any]:
