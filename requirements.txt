@@ -1,3 +1,4 @@
+uvicorn
 litestar[standard]        # ASGI framework including Uvicorn, dependency injection, OpenAPI, etc. :contentReference[oaicite:0]{index=0}
 httpx                    # Async HTTP client for fetching pages :contentReference[oaicite:1]{index=1}
 beautifulsoup4          # HTML parsing with BeautifulSoup :contentReference[oaicite:2]{index=2}
