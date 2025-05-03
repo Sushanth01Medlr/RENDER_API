@@ -43,11 +43,24 @@ class PriceResponse(BaseModel):
     errors: List[str] = Field(default_factory=list)
 
 
-from litestar import get, Litestar
-
-@route("/",methods=[HttpMethod.GET, HttpMethod.HEAD])  
-async def health_check() -> dict[str, str]:
+async def perform_health_check() -> dict[str, str]:
+    """The actual logic for the health check."""
     return {"status": "alive"}
+    
+@get("/")
+async def health_check_get() -> dict[str, str]:
+    """Handles GET requests for the root path."""
+    return await perform_health_check()
+
+@head("/")
+async def health_check_head() -> None:
+    """
+    Handles HEAD requests for the root path.
+    Executes the logic but returns None. Litestar automatically
+    handles sending appropriate headers and no body for HEAD.
+    """
+    await perform_health_check() # Run the check logic (e.g., to ensure DB connection is ok)
+    return None
 
 async def fetch_apollo_price(url: str) -> Dict[str, Any]:
     """Fetch the retail price from Apollo Pharmacy."""
@@ -854,6 +867,6 @@ async def get_retail_prices(data: PriceRequest) -> Response:
 
 
 app = Litestar(
-    route_handlers=[get_retail_prices,health_check],
+    route_handlers=[get_retail_prices,health_check_get,health_check_head],
     debug=True
 )
