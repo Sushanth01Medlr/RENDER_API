@@ -11,7 +11,7 @@ from litestar import Litestar, post
 from litestar.response import Response
 from litestar.enums import HttpMethod
 import uvicorn
-from litestar import get, route
+from litestar import get, route,head
 
 class PriceRequestSource(BaseModel):
     """Model for source URLs to fetch prices from."""
