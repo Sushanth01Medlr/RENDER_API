@@ -44,7 +44,6 @@ class PriceResponse(BaseModel):
 from litestar import get, Litestar
 
 @get("/")  # Handles GET (and HEAD by virtue of GET)
-@head("/")
 async def health_check() -> dict[str, str]:
     return {"status": "alive"}
 
