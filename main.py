@@ -9,7 +9,9 @@ from lxml import etree
 from pydantic import BaseModel, Field
 from litestar import Litestar, post
 from litestar.response import Response
-
+from litestar.enums import HttpMethod
+import uvicorn
+from litestar import get, route
 
 class PriceRequestSource(BaseModel):
     """Model for source URLs to fetch prices from."""
@@ -43,7 +45,7 @@ class PriceResponse(BaseModel):
 
 from litestar import get, Litestar
 
-@get("/")  # Handles GET (and HEAD by virtue of GET)
+@route("/",methods=[HttpMethod.GET, HttpMethod.HEAD])  
 async def health_check() -> dict[str, str]:
     return {"status": "alive"}
 
